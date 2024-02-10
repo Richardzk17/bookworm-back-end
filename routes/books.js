@@ -1,7 +1,7 @@
 import { Router } from "express"
 import { decodeUserFromToken, checkAuth } from '../middleware/auth.js'
 import { router } from "./profiles.js"
-import * as booksCtrl from '../controllers/book.js'
+import * as booksCtrl from '../controllers/books.js'
 
 const router = Router()
 
