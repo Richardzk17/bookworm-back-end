@@ -4,8 +4,9 @@ import { Profile } from "../models/profile.js"
 async function index(req, res) {
   try {
     const books = await Book.find({})
-    .sort({createdAt: 'desc'})
-    res.status(201).json(book)
+    // good feature to implement
+    // .sort({createdAt: 'desc'})
+    res.status(201).json(books)
   } catch (error) {
     console.log(error)
     res.status(500).json(error)
@@ -33,6 +34,20 @@ async function show(req, res) {
   }
 }
 
+async function update(req, res) {
+  try {
+    const book = await Book.findByIdAndUpdate(
+      req.params.bookId,
+      req.body,
+      { new: true })
+    // .populate('author')
+    res.status(200).json(book)
+  } catch (error) {
+    console.log(error)
+    res.status(500).json(error)
+  }
+}
+
 async function createComment(req, res) {
   try {
     req.body.author = req.user.profile
@@ -50,8 +65,37 @@ async function createComment(req, res) {
   }
 }
 
+async function createReview(req, res) {
+  try {
+    req.body.author = req.user.profile
+    const book = await Book.findById(req.params.bookId)
+    book.reviews.push(req.body)
+    await book.save()
+
+    const newReview = book.reviews[book.reviews.length - 1]
+    const profile = await Profile.findById(req.user.profile)
+    newReview.author = profile
+    res.status(201).json(newReview)
+  } catch (error) {
+    console.log(error)
+    res.status(500).json(error)
+  }
+}
+
+async function deleteReview(req, res) {
+  try {
+    const book = await Book.findById(req.params.bookId)
+  } catch (error) {
+    console.log(error)
+    res.status(500).json(error)
+  }
+}
+
 export {
+  index, 
   create, 
   show, 
+  update,
   createComment,
+  createReview
 }
