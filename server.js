@@ -12,7 +12,7 @@ import './config/database.js'
 import { router as profilesRouter } from './routes/profiles.js'
 import { router as authRouter } from './routes/auth.js'
 import { router as booksRouter } from './routes/books.js'
-
+import { router as bookshelvesRouter } from './routes/bookshelves.js'
 
 // create the express app
 const app = express()
@@ -26,8 +26,8 @@ app.use(formData.parse())
 // mount imported routes
 app.use('/api/profiles', profilesRouter)
 app.use('/api/auth', authRouter)
-app.use('/api/books', authRouter)
-
+app.use('/api/books', booksRouter)
+app.use('/api/bookshelves', bookshelvesRouter)
 
 // handle 404 errors
 app.use(function (req, res, next) {
