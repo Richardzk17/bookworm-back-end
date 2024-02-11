@@ -84,7 +84,11 @@ async function createReview(req, res) {
 
 async function deleteReview(req, res) {
   try {
+    const reviewToDelete = await Book.reviews.findByIdAndDelete(req.params.reviewId)
     const book = await Book.findById(req.params.bookId)
+    book.reviews.remove({ _id: req.params.reviewId })
+    await book.save()
+    res.status(200).json(reviewToDelete)
   } catch (error) {
     console.log(error)
     res.status(500).json(error)
@@ -97,5 +101,6 @@ export {
   show, 
   update,
   createComment,
-  createReview
+  createReview,
+  deleteReview
 }
