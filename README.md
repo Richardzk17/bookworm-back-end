@@ -54,6 +54,6 @@ Stay tuned for additional features!
 
 ### [Joshua Butler](https://www.linkedin.com/in/joshuaabutler/) : API Manager
 
-### [Joshua Butler](https://www.linkedin.com/in/richardhernandezk/) : Git Manager & Lead Designer
+### [Richard Hernandez](https://www.linkedin.com/in/richardhernandezk/) : Git Manager & Lead Designer
 
 ### <p align="center">*Front & Back-end co-developed by entire team with joint effort and delegated tasks 💪*</p>
