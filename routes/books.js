@@ -14,7 +14,7 @@ router.post('/', checkAuth, booksCtrl.create)
 router.put('/:bookId', checkAuth, booksCtrl.update)
 router.post('/:bookId/comments', checkAuth, booksCtrl.createComment)
 router.post('/:bookId/reviews', checkAuth, booksCtrl.createReview)
-router.delete('/:bookId/comments/:commentId', checkAuth, blogsCtrl.deleteComment)
-router.delete('/:bookId/reviews/:reviewId', checkAuth, blogsCtrl.deleteReview)
+// router.delete('/:bookId/comments/:commentId', checkAuth, booksCtrl.deleteComment)
+router.delete('/:bookId/reviews/:reviewId', checkAuth, booksCtrl.deleteReview)
 
 export { router }

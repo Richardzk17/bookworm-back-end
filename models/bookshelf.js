@@ -8,6 +8,6 @@ const bookshelfSchema = new Schema({
   timestamps: true,
 })
 
-const Bookshelf = mongoose.model(bookshelfSchema)
+const Bookshelf = mongoose.model('Bookshelf', bookshelfSchema)
 
 export { Bookshelf }
