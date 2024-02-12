@@ -52,4 +52,4 @@ async function indexBookshelf(req, res) {
   }
 }
 
-export { index, addPhoto, indexBookshelf }
+export { index, addPhoto, indexBookshelf, show }
