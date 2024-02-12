@@ -17,17 +17,6 @@ async function create(req, res) {
   }
 }
 
-async function show(req, res) {
-  try {
-    const bookshelf = await Bookshelf.findById(req.params.bookshelfId)
-      .populate(['myBooks'])
-    res.status(200).json(bookshelf)
-  } catch (error) {
-    console.log(error)
-    res.status(500).json(error)
-  }
-}
-
 
 export {
   create

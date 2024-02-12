@@ -9,7 +9,9 @@ const router = Router()
 
 /*---------- Protected Routes ----------*/
 router.use(decodeUserFromToken)
-router.post('/', checkAuth, bookshelvesCtrl.create)
-router.delete('/:bookId', checkAuth, bookshelvesCtrl.delete)
+router.post('/', checkAuth, booksCtrl.create)
+router.get('/:bookshelfId', checkAuth, bookshelvesCtrl.show) 
+router.put('/:bookshelfId/:bookId', checkAuth, bookshelvesCtrl.update)
+router.delete('/:bookshelfId/:bookId', checkAuth, bookshelvesCtrl.delete)
 
 export { router }
