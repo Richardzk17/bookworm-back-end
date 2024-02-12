@@ -1,5 +1,5 @@
 import { Bookshelf } from "../models/bookshelf.js"
-import { Book } from "../models/book.js"
+import { Profile } from "../models/profile.js"
 
 
 async function create(req, res) {
@@ -7,11 +7,10 @@ async function create(req, res) {
     const book = await Bookshelf.create(req.body)
     const profile = await Profile.findByIdAndUpdate(
       req.user.profile,
-      { $push: { books: book } },
+      { $push: { bookshelf: book } },
       { new: true }
     )
-    blog.author = profile
-    res.status(201).json(blog)
+    res.status(201).json(profile)
   } catch (error) {
     console.log(error)
     res.status(500).json(error)
@@ -54,6 +53,7 @@ async function deleteBook(req, res) {
 }
 
 export {
+  create,
   show,
   update,
   deleteBook as delete
