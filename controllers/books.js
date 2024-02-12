@@ -34,22 +34,6 @@ async function show(req, res) {
   }
 }
 
-
-// We don't want users to be able to change books, because it will affect other users
-// async function update(req, res) {
-//   try {
-//     const book = await Book.findByIdAndUpdate(
-//       req.params.bookId,
-//       req.body,
-//       { new: true })
-//     .populate('author')
-//     res.status(200).json(book)
-//   } catch (error) {
-//     console.log(error)
-//     res.status(500).json(error)
-//   }
-// }
-
 async function createComment(req, res) {
   try {
     req.body.author = req.user.profile
@@ -84,25 +68,10 @@ async function createReview(req, res) {
   }
 }
 
-async function deleteReview(req, res) {
-  try {
-    const reviewToDelete = await Book.reviews.findByIdAndDelete(req.params.reviewId)
-    const book = await Book.findById(req.params.bookId)
-    book.reviews.remove({ _id: req.params.reviewId })
-    await book.save()
-    res.status(200).json(reviewToDelete)
-  } catch (error) {
-    console.log(error)
-    res.status(500).json(error)
-  }
-}
-
 export {
   index, 
   create, 
   show, 
-  update,
   createComment,
   createReview,
-  deleteReview
 }
