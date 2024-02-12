@@ -31,7 +31,7 @@ async function addPhoto(req, res) {
   }
 }
 
-async function show(req, res) {
+async function index(req, res) {
   try {
     const profile = await Profile.findById(req.params.profileId)
     .populate(['bookshelf'])
@@ -42,4 +42,4 @@ async function show(req, res) {
   }
 }
 
-export { index, addPhoto, show }
+export { index, addPhoto, index }
