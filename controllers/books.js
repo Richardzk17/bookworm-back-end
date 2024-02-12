@@ -34,19 +34,21 @@ async function show(req, res) {
   }
 }
 
-async function update(req, res) {
-  try {
-    const book = await Book.findByIdAndUpdate(
-      req.params.bookId,
-      req.body,
-      { new: true })
-    // .populate('author')
-    res.status(200).json(book)
-  } catch (error) {
-    console.log(error)
-    res.status(500).json(error)
-  }
-}
+
+// We don't want users to be able to change books, because it will affect other users
+// async function update(req, res) {
+//   try {
+//     const book = await Book.findByIdAndUpdate(
+//       req.params.bookId,
+//       req.body,
+//       { new: true })
+//     .populate('author')
+//     res.status(200).json(book)
+//   } catch (error) {
+//     console.log(error)
+//     res.status(500).json(error)
+//   }
+// }
 
 async function createComment(req, res) {
   try {
