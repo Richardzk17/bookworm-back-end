@@ -51,6 +51,10 @@ async function createComment(req, res) {
   }
 }
 
+async function deleteReview(req, res) {
+  
+}
+
 async function createReview(req, res) {
   try {
     req.body.author = req.user.profile
