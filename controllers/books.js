@@ -51,6 +51,19 @@ async function createComment(req, res) {
   }
 }
 
+async function deleteComment(req, res) {
+  try {
+    const book = await Book.findById(req.params.bookId)
+    const commentIndex = book.comments.findIndex(comment => comment._id == req.params.commentId)
+    book.comments.splice(commentIndex, 1)
+    await book.save()
+  res.status(201).json(commentIndex)
+  } catch (error) {
+    console.log(error)
+    res.status(500).json(error)
+  }
+}
+
 async function deleteReview(req, res) {
   try {
     const book = await Book.findById(req.params.bookId)
@@ -81,6 +94,8 @@ async function createReview(req, res) {
   }
 }
 
+
+
 export {
   index, 
   create, 
@@ -88,4 +103,5 @@ export {
   createComment,
   createReview,
   deleteReview,
+  deleteComment
 }
