@@ -94,7 +94,9 @@ async function createReview(req, res) {
   }
 }
 
+async function updateReview(req, res) {
 
+}
 
 export {
   index, 
