@@ -1,6 +1,7 @@
 import { Profile } from '../models/profile.js'
 import { v2 as cloudinary } from 'cloudinary'
 
+
 async function index(req, res) {
   try {
     const profiles = await Profile.find({})
@@ -8,6 +9,17 @@ async function index(req, res) {
   } catch (err) {
     console.log(err)
     res.status(500).json(err)
+  }
+}
+
+async function show(req, res) {
+  try {
+    const profile = await Profile.findById(req.params.profileId)
+    .populate(['bookshelf'])
+    res.status(200).json(profile)
+  } catch (error) {
+    console.log(error)
+    res.status(500).json(error)
   }
 }
 
@@ -30,4 +42,6 @@ async function addPhoto(req, res) {
   }
 }
 
-export { index, addPhoto }
+
+
+export { index, addPhoto, show }
