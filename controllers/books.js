@@ -51,6 +51,32 @@ async function createComment(req, res) {
   }
 }
 
+async function deleteComment(req, res) {
+  try {
+    const book = await Book.findById(req.params.bookId)
+    const commentIndex = book.comments.findIndex(comment => comment._id == req.params.commentId)
+    book.comments.splice(commentIndex, 1)
+    await book.save()
+  res.status(201).json(commentIndex)
+  } catch (error) {
+    console.log(error)
+    res.status(500).json(error)
+  }
+}
+
+async function deleteReview(req, res) {
+  try {
+    const book = await Book.findById(req.params.bookId)
+    const reviewIndex = book.reviews.findIndex(review => review._id == req.params.reviewId)
+    book.reviews.splice(reviewIndex, 1)
+    await book.save()
+  res.status(201).json(reviewIndex)
+  } catch (error) {
+    console.log(error)
+    res.status(500).json(error)
+  }
+}
+
 async function createReview(req, res) {
   try {
     req.body.author = req.user.profile
@@ -68,10 +94,41 @@ async function createReview(req, res) {
   }
 }
 
+async function update(req, res) {
+  try {
+    const book = await Book.findByIdAndUpdate(
+      req.params.bookId,
+      req.body,
+      { new: true}
+      ).populate('comments', 'reviews')
+    res.status(200).json(book)
+  } catch (error) {
+    console.log(error)
+    res.status(500).json(error)
+  }
+}
+
+// async function update(req, res) {
+//   try {
+//     const blog = await Blog.findByIdAndUpdate(
+//       req.params.blogId,
+//       req.body,
+//       { new: true }
+//     ).populate('author')
+//     res.status(200).json(blog)
+//   } catch (error) {
+//     console.log(error)
+//     res.status(500).json(error)
+//   }
+// }
+
 export {
   index, 
   create, 
   show, 
   createComment,
   createReview,
+  deleteReview,
+  deleteComment,
+  update
 }
