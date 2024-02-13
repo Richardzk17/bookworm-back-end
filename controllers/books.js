@@ -94,9 +94,33 @@ async function createReview(req, res) {
   }
 }
 
-async function updateReview(req, res) {
-
+async function update(req, res) {
+  try {
+    const book = await Book.findByIdAndUpdate(
+      req.params.bookId,
+      req.body,
+      { new: true}
+      ).populate('comments', 'reviews')
+    res.status(200).json(book)
+  } catch (error) {
+    console.log(error)
+    res.status(500).json(error)
+  }
 }
+
+// async function update(req, res) {
+//   try {
+//     const blog = await Blog.findByIdAndUpdate(
+//       req.params.blogId,
+//       req.body,
+//       { new: true }
+//     ).populate('author')
+//     res.status(200).json(blog)
+//   } catch (error) {
+//     console.log(error)
+//     res.status(500).json(error)
+//   }
+// }
 
 export {
   index, 
@@ -105,5 +129,6 @@ export {
   createComment,
   createReview,
   deleteReview,
-  deleteComment
+  deleteComment,
+  update
 }

@@ -13,6 +13,8 @@ router.use(decodeUserFromToken)
 router.post('/', checkAuth, booksCtrl.create)
 router.post('/:bookId/comments', checkAuth, booksCtrl.createComment)
 router.post('/:bookId/reviews', checkAuth, booksCtrl.createReview)
+router.put('/:bookId/comments/:commentId', checkAuth, booksCtrl.update)
+router.put('/:bookId/reviews/:reviewId', checkAuth, booksCtrl.update)
 router.delete('/:bookId/comments/:commentId', checkAuth, booksCtrl.deleteComment)
 router.delete('/:bookId/reviews/:reviewId', checkAuth, booksCtrl.deleteReview)
 
