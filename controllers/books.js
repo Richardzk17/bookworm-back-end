@@ -26,7 +26,7 @@ async function create(req, res) {
 async function show(req, res) {
   try {
     const book = await Book.findById(req.params.bookId)
-    .populate(['comments'])
+    .populate(['comments', 'reviews'])
     res.status(200).json(book)
   } catch (error) {
     console.log(error)
@@ -99,7 +99,7 @@ async function update(req, res) {
     const book = await Book.findByIdAndUpdate(
       req.params.bookId,
       req.body,
-      { new: true}
+      { new: true }
       ).populate('comments', 'reviews')
     res.status(200).json(book)
   } catch (error) {
