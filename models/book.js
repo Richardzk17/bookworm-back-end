@@ -51,6 +51,10 @@ const bookSchema = new Schema(
       type: String,
       required: true,
     },
+    OLId: {
+      type: String,
+      required: true,
+    },
     reviews: [reviewSchema],
     comments: [commentSchema]
   },
