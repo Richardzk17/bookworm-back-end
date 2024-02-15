@@ -78,9 +78,9 @@ async function deleteReview(req, res) {
   try {
     const book = await Book.findById(req.params.bookId)
     const reviewIndex = book.reviews.findIndex(review => review._id == req.params.reviewId)
-    book.reviews.splice(reviewIndex, 1)
+    const removedReview = book.reviews.splice(reviewIndex, 1)
     await book.save()
-  res.status(201).json(reviewIndex)
+  res.status(201).json(removedReview[0]._id)
   } catch (error) {
     console.log(error)
     res.status(500).json(error)
