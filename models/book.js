@@ -55,6 +55,10 @@ const bookSchema = new Schema(
       type: String,
       required: true,
     },
+    coverURL: {
+      type: String,
+      required: true,
+    },
     reviews: [reviewSchema],
     comments: [commentSchema]
   },
