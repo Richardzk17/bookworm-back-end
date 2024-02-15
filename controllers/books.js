@@ -6,7 +6,7 @@ async function index(req, res) {
     const books = await Book.find({})
     // good feature to implement
     // .sort({createdAt: 'desc'})
-    res.status(201).json(books)
+    res.status(200).json(books)
   } catch (error) {
     console.log(error)
     res.status(500).json(error)
@@ -26,7 +26,17 @@ async function create(req, res) {
 async function show(req, res) {
   try {
     const book = await Book.findById(req.params.bookId)
-    .populate(['comments'])
+    .populate(['comments', 'reviews'])
+    res.status(200).json(book)
+  } catch (error) {
+    console.log(error)
+    res.status(500).json(error)
+  }
+}
+
+async function showByOLId(req, res) {
+  try {
+    const book = await Book.findOne({OLId: req.params.OLId})
     res.status(200).json(book)
   } catch (error) {
     console.log(error)
@@ -99,7 +109,7 @@ async function update(req, res) {
     const book = await Book.findByIdAndUpdate(
       req.params.bookId,
       req.body,
-      { new: true}
+      { new: true }
       ).populate('comments', 'reviews')
     res.status(200).json(book)
   } catch (error) {
@@ -108,24 +118,13 @@ async function update(req, res) {
   }
 }
 
-// async function update(req, res) {
-//   try {
-//     const blog = await Blog.findByIdAndUpdate(
-//       req.params.blogId,
-//       req.body,
-//       { new: true }
-//     ).populate('author')
-//     res.status(200).json(blog)
-//   } catch (error) {
-//     console.log(error)
-//     res.status(500).json(error)
-//   }
-// }
+
 
 export {
   index, 
   create, 
   show, 
+  showByOLId,
   createComment,
   createReview,
   deleteReview,

@@ -47,7 +47,11 @@ const bookSchema = new Schema(
       type: String,
       required: true,
     },
-    genre: {
+    OLId: {
+      type: String,
+      required: true,
+    },
+    coverURL: {
       type: String,
       required: true,
     },
