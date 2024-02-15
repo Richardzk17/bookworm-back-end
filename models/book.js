@@ -16,10 +16,10 @@ const reviewSchema = new Schema({
     type: Boolean,
     required: true
   },
-  // author: {
-  //   type: Schema.Types.ObjectId,
-  //   ref: 'Profile'
-  // }
+  author: {
+    type: Schema.Types.ObjectId,
+    ref: 'Profile'
+  }
 }, {
   timestamps: true
 })
@@ -29,10 +29,10 @@ const commentSchema = new Schema({
     type: String,
     required: true
   },
-  // author: {
-  //   type: Schema.Types.ObjectId,
-  //   ref: 'Profile'
-  // }
+  author: {
+    type: Schema.Types.ObjectId,
+    ref: 'Profile'
+  }
 }, {
   timestamps: true
 })
@@ -54,7 +54,7 @@ const bookSchema = new Schema(
     summary: {
       type: String,
       required: true,
-      default: "No Description Available",
+      default: "Description Not Available",
     },
     publishYear: {
       type: Number,
@@ -62,7 +62,7 @@ const bookSchema = new Schema(
     },
     pageCount: {
       type: Number,
-      required: true,
+      required: false,
     },
     coverURL: {
       type: String,
