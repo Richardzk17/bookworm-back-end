@@ -34,6 +34,16 @@ async function show(req, res) {
   }
 }
 
+async function showByOLId(req, res) {
+  try {
+    const book = await Book.findOne({OLId: req.params.OLId})
+    res.status(200).json(book)
+  } catch (error) {
+    console.log(error)
+    res.status(500).json(error)
+  }
+}
+
 async function createComment(req, res) {
   try {
     req.body.author = req.user.profile
@@ -114,6 +124,7 @@ export {
   index, 
   create, 
   show, 
+  showByOLId,
   createComment,
   createReview,
   deleteReview,
