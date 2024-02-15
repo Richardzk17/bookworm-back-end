@@ -54,6 +54,7 @@ const bookSchema = new Schema(
     summary: {
       type: String,
       required: true,
+      default: "No Description Available",
     },
     publishYear: {
       type: Number,
