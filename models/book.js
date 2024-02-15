@@ -10,16 +10,17 @@ const reviewSchema = new Schema({
   rating: {
     type: Number,
     required: true,
-    // enum: ['1', '2', '3', '4', '5']
+    min: 1,
+    max: 5
   },
   recommended: {
     type: Boolean,
     required: true
   },
-  // author: {
-  //   type: Schema.Types.ObjectId,
-  //   ref: 'Profile'
-  // }
+  author: {
+    type: Schema.Types.ObjectId,
+    ref: 'Profile'
+  }
 }, {
   timestamps: true
 })
@@ -29,10 +30,10 @@ const commentSchema = new Schema({
     type: String,
     required: true
   },
-  // author: {
-  //   type: Schema.Types.ObjectId,
-  //   ref: 'Profile'
-  // }
+  author: {
+    type: Schema.Types.ObjectId,
+    ref: 'Profile'
+  }
 }, {
   timestamps: true
 })
@@ -50,6 +51,19 @@ const bookSchema = new Schema(
     OLId: {
       type: String,
       required: true,
+    },
+    summary: {
+      type: String,
+      required: true,
+      default: "Description Not Available",
+    },
+    publishYear: {
+      type: Number,
+      required: true,
+    },
+    pageCount: {
+      type: Number,
+      required: false,
     },
     coverURL: {
       type: String,

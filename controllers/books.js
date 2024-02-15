@@ -26,7 +26,7 @@ async function create(req, res) {
 async function show(req, res) {
   try {
     const book = await Book.findById(req.params.bookId)
-    .populate(['comments', 'reviews'])
+    .populate(['comments.author', 'reviews.author'])
     res.status(200).json(book)
   } catch (error) {
     console.log(error)
@@ -78,9 +78,9 @@ async function deleteReview(req, res) {
   try {
     const book = await Book.findById(req.params.bookId)
     const reviewIndex = book.reviews.findIndex(review => review._id == req.params.reviewId)
-    book.reviews.splice(reviewIndex, 1)
+    const removedReview = book.reviews.splice(reviewIndex, 1)
     await book.save()
-  res.status(201).json(reviewIndex)
+  res.status(201).json(removedReview[0]._id)
   } catch (error) {
     console.log(error)
     res.status(500).json(error)
@@ -118,6 +118,33 @@ async function update(req, res) {
   }
 }
 
+const updateReview = async (req, res) => {
+  try {
+    const book = await Book.findById(req.params.bookId)
+    .populate(['comments.author', 'reviews.author'])
+    const review = book.reviews.id(req.params.reviewId)
+    review.text = req.body.text
+    review.rating = req.body.rating
+    review.recommended = req.body.recommended
+    await book.save()
+    res.status(200).json(book)
+  } catch (err) {
+    res.status(500).json(err)
+  }
+}
+
+const updateComment = async (req, res) => {
+  try {
+    const book = await Book.findById(req.params.bookId)
+    .populate(['comments.author', 'reviews.author'])
+    const comment = book.comments.id(req.params.commentId)
+    comment.text = req.body.text
+    await book.save()
+    res.status(200).json(book)
+  } catch (err) {
+    res.status(500).json(err)
+  }
+}
 
 
 export {
@@ -129,5 +156,7 @@ export {
   createReview,
   deleteReview,
   deleteComment,
-  update
+  update,
+  updateReview,
+  updateComment,
 }
