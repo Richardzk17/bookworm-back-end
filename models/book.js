@@ -51,6 +51,18 @@ const bookSchema = new Schema(
       type: String,
       required: true,
     },
+    summary: {
+      type: String,
+      required: true,
+    },
+    publishYear: {
+      type: Number,
+      required: true,
+    },
+    pageCount: {
+      type: Number,
+      required: true,
+    },
     coverURL: {
       type: String,
       required: true,
