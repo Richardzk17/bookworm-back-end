@@ -118,6 +118,31 @@ async function update(req, res) {
   }
 }
 
+const updateReview = async (req, res) => {
+  try {
+    const book = await Book.findById(req.params.bookId)
+    const review = book.reviews.id(req.params.reviewId)
+    review.text = req.body.text
+    review.rating = req.body.rating
+    review.recommended = req.body.recommended
+    await book.save()
+    res.status(200).json(book)
+  } catch (err) {
+    res.status(500).json(err)
+  }
+}
+
+const updateComment = async (req, res) => {
+  try {
+    const book = await Book.findById(req.params.bookId)
+    const comment = book.comments.id(req.params.commentId)
+    comment.text = req.body.text
+    await book.save()
+    res.status(200).json(book)
+  } catch (err) {
+    res.status(500).json(err)
+  }
+}
 
 
 export {
@@ -129,5 +154,7 @@ export {
   createReview,
   deleteReview,
   deleteComment,
-  update
+  update,
+  updateReview,
+  updateComment,
 }
