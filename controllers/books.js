@@ -6,7 +6,7 @@ async function index(req, res) {
     const books = await Book.find({})
     // good feature to implement
     // .sort({createdAt: 'desc'})
-    res.status(201).json(books)
+    res.status(200).json(books)
   } catch (error) {
     console.log(error)
     res.status(500).json(error)
