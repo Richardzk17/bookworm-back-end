@@ -13,5 +13,6 @@ router.get('/', checkAuth, profilesCtrl.index)
 // this route will also populate the bookshelf data
 router.get('/:profileId', checkAuth, profilesCtrl.show)
 router.put('/:id/add-photo', checkAuth, profilesCtrl.addPhoto)
+router.put('/:profileId/bookshelf/:bookId', checkAuth, profilesCtrl.addToBookshelf)
 
 export { router }

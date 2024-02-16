@@ -42,6 +42,24 @@ async function addPhoto(req, res) {
   }
 }
 
+const addToBookshelf = async (req, res) => {
+  try {
+    const book = await Book.findById(req.params.bookId)
+    .populate(['comments.author', 'reviews.author'])
+    const review = book.reviews.id(req.params.reviewId)
+    review.text = req.body.text
+    review.rating = req.body.rating
+    review.recommended = req.body.recommended
+    await book.save()
+    res.status(200).json(book)
+  } catch (err) {
+    res.status(500).json(err)
+  }
+}
 
-
-export { index, addPhoto, show }
+export { 
+  index, 
+  addPhoto, 
+  show,
+  addToBookshelf,
+ }
