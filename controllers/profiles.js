@@ -16,7 +16,7 @@ async function index(req, res) {
 async function show(req, res) {
   try {
     const profile = await Profile.findById(req.params.profileId)
-    .populate(['bookshelf'])
+    .populate('bookshelf')
     res.status(200).json(profile)
   } catch (error) {
     console.log(error)
@@ -47,6 +47,10 @@ const addToBookshelf = async (req, res) => {
   try {
     const book = await Book.findById(req.params.bookId)
     const profile = await Profile.findById(req.params.profileId)
+    if (profile.bookshelf.includes(book._id)) {
+      return res.status(400).json({ error: 'Book already in bookshelf' });
+    }
+
     profile.bookshelf.push(book._id)
     await profile.save()
     res.status(200).json(profile)
