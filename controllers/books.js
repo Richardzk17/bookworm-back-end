@@ -47,6 +47,7 @@ async function showByOLId(req, res) {
 async function createComment(req, res) {
   try {
     req.body.author = req.user.profile
+    console.log(req)
     const book = await Book.findById(req.params.bookId)
     book.comments.push(req.body)
     await book.save()
