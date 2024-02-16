@@ -1,4 +1,5 @@
 import { Profile } from '../models/profile.js'
+import { Book } from '../models/book.js'
 import { v2 as cloudinary } from 'cloudinary'
 
 
@@ -45,30 +46,25 @@ async function addPhoto(req, res) {
 const addToBookshelf = async (req, res) => {
   try {
     const book = await Book.findById(req.params.bookId)
-    .populate(['comments.author', 'reviews.author'])
-    const review = book.reviews.id(req.params.reviewId)
-    review.text = req.body.text
-    review.rating = req.body.rating
-    review.recommended = req.body.recommended
-    await book.save()
-    res.status(200).json(book)
+    const profile = await Profile.findById(req.params.profileId)
+    profile.bookshelf.push(book._id)
+    await profile.save()
+    res.status(200).json(profile)
   } catch (err) {
     res.status(500).json(err)
   }
 }
 
-const deleteFromBookshelf = async (req, res) => {
+async function deleteFromBookshelf(req, res) {
   try {
-    const book = await Book.findById(req.params.bookId)
-    .populate(['comments.author', 'reviews.author'])
-    const review = book.reviews.id(req.params.reviewId)
-    review.text = req.body.text
-    review.rating = req.body.rating
-    review.recommended = req.body.recommended
-    await book.save()
-    res.status(200).json(book)
-  } catch (err) {
-    res.status(500).json(err)
+    const profile = await Profile.findById(req.params.profileId)
+    const bookIndex = profile.bookshelf.findIndex(book => book == req.params.bookId)
+    const removedBook = profile.bookshelf.splice(bookIndex, 1)
+    await profile.save()
+    res.status(201).json(removedBook[0])
+  } catch (error) {
+    console.log(error)
+    res.status(500).json(error)
   }
 }
 

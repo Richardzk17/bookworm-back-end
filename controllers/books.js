@@ -68,7 +68,7 @@ async function deleteComment(req, res) {
     const commentIndex = book.comments.findIndex(comment => comment._id == req.params.commentId)
     const removedComment = book.comments.splice(commentIndex, 1)
     await book.save()
-  res.status(201).json(removedComment[0]._id)
+    res.status(201).json(removedComment[0]._id)
   } catch (error) {
     console.log(error)
     res.status(500).json(error)
@@ -81,7 +81,7 @@ async function deleteReview(req, res) {
     const reviewIndex = book.reviews.findIndex(review => review._id == req.params.reviewId)
     const removedReview = book.reviews.splice(reviewIndex, 1)
     await book.save()
-  res.status(201).json(removedReview[0]._id)
+    res.status(201).json(removedReview[0]._id)
   } catch (error) {
     console.log(error)
     res.status(500).json(error)
