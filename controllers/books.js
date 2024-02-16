@@ -66,9 +66,9 @@ async function deleteComment(req, res) {
   try {
     const book = await Book.findById(req.params.bookId)
     const commentIndex = book.comments.findIndex(comment => comment._id == req.params.commentId)
-    book.comments.splice(commentIndex, 1)
+    const removedComment = book.comments.splice(commentIndex, 1)
     await book.save()
-  res.status(201).json(commentIndex)
+  res.status(201).json(removedComment[0]._id)
   } catch (error) {
     console.log(error)
     res.status(500).json(error)
