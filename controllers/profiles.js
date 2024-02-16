@@ -1,4 +1,5 @@
 import { Profile } from '../models/profile.js'
+import { Book } from '../models/book.js'
 import { v2 as cloudinary } from 'cloudinary'
 
 
@@ -15,7 +16,7 @@ async function index(req, res) {
 async function show(req, res) {
   try {
     const profile = await Profile.findById(req.params.profileId)
-    .populate(['bookshelf'])
+    .populate('bookshelf')
     res.status(200).json(profile)
   } catch (error) {
     console.log(error)
@@ -42,6 +43,39 @@ async function addPhoto(req, res) {
   }
 }
 
+const addToBookshelf = async (req, res) => {
+  try {
+    const book = await Book.findById(req.params.bookId)
+    const profile = await Profile.findById(req.params.profileId)
+    if (profile.bookshelf.includes(book._id)) {
+      return res.status(400).json({ error: 'Book already in bookshelf' });
+    }
 
+    profile.bookshelf.push(book._id)
+    await profile.save()
+    res.status(200).json(profile)
+  } catch (err) {
+    res.status(500).json(err)
+  }
+}
 
-export { index, addPhoto, show }
+async function deleteFromBookshelf(req, res) {
+  try {
+    const profile = await Profile.findById(req.params.profileId)
+    const bookIndex = profile.bookshelf.findIndex(book => book == req.params.bookId)
+    const removedBook = profile.bookshelf.splice(bookIndex, 1)
+    await profile.save()
+    res.status(201).json(removedBook[0])
+  } catch (error) {
+    console.log(error)
+    res.status(500).json(error)
+  }
+}
+
+export { 
+  index, 
+  addPhoto, 
+  show,
+  addToBookshelf,
+  deleteFromBookshelf,
+}
