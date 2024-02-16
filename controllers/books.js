@@ -134,20 +134,6 @@ const updateReview = async (req, res) => {
   }
 }
 
-const updateComment = async (req, res) => {
-  try {
-    const book = await Book.findById(req.params.bookId)
-    .populate(['comments.author', 'reviews.author'])
-    const comment = book.comments.id(req.params.commentId)
-    comment.text = req.body.text
-    await book.save()
-    res.status(200).json(book)
-  } catch (err) {
-    res.status(500).json(err)
-  }
-}
-
-
 export {
   index, 
   create, 
@@ -159,5 +145,4 @@ export {
   deleteComment,
   update,
   updateReview,
-  updateComment,
 }
