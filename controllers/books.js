@@ -47,6 +47,7 @@ async function showByOLId(req, res) {
 async function createComment(req, res) {
   try {
     req.body.author = req.user.profile
+    console.log(req)
     const book = await Book.findById(req.params.bookId)
     book.comments.push(req.body)
     await book.save()
@@ -65,9 +66,9 @@ async function deleteComment(req, res) {
   try {
     const book = await Book.findById(req.params.bookId)
     const commentIndex = book.comments.findIndex(comment => comment._id == req.params.commentId)
-    book.comments.splice(commentIndex, 1)
+    const removedComment = book.comments.splice(commentIndex, 1)
     await book.save()
-  res.status(201).json(commentIndex)
+  res.status(201).json(removedComment[0]._id)
   } catch (error) {
     console.log(error)
     res.status(500).json(error)
@@ -133,20 +134,6 @@ const updateReview = async (req, res) => {
   }
 }
 
-const updateComment = async (req, res) => {
-  try {
-    const book = await Book.findById(req.params.bookId)
-    .populate(['comments.author', 'reviews.author'])
-    const comment = book.comments.id(req.params.commentId)
-    comment.text = req.body.text
-    await book.save()
-    res.status(200).json(book)
-  } catch (err) {
-    res.status(500).json(err)
-  }
-}
-
-
 export {
   index, 
   create, 
@@ -158,5 +145,4 @@ export {
   deleteComment,
   update,
   updateReview,
-  updateComment,
 }
