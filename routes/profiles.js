@@ -14,5 +14,6 @@ router.get('/', checkAuth, profilesCtrl.index)
 router.get('/:profileId', checkAuth, profilesCtrl.show)
 router.put('/:id/add-photo', checkAuth, profilesCtrl.addPhoto)
 router.put('/:profileId/bookshelf/:bookId', checkAuth, profilesCtrl.addToBookshelf)
+router.delete('/:profileId/bookshelf/:bookId', checkAuth, profilesCtrl.deleteFromBookshelf)
 
 export { router }
