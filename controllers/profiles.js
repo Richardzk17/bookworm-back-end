@@ -46,13 +46,15 @@ async function addPhoto(req, res) {
 const addToBookshelf = async (req, res) => {
   try {
     const book = await Book.findById(req.params.bookId)
-    const profile = await Profile.findById(req.params.profileId)
+    const profileBooks = [book]  
+    const profile = await Profile.findById(req.params.profileId).populate('bookshelf')
     if (profile.bookshelf.includes(book._id)) {
       return res.status(400).json({ error: 'Book already in bookshelf' });
     }
-
+    profileBooks.push(...profile.bookshelf)
     profile.bookshelf.push(book._id)
     await profile.save()
+    profile.bookshelf = profileBooks
     res.status(200).json(profile)
   } catch (err) {
     res.status(500).json(err)
